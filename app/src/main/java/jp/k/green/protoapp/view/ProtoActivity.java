@@ -3,10 +3,12 @@ package jp.k.green.protoapp.view;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import jp.k.green.protoapp.R;
@@ -14,8 +16,13 @@ import jp.k.green.protoapp.domain.IProtoController;
 import jp.k.green.protoapp.domain.IProtoControllerCallback;
 import jp.k.green.protoapp.domain.ProtoController;
 import jp.k.green.protoapp.domain.ProtoControllerData;
+import jp.k.green.protoapp.view.fragment.ProtoFirstFragment;
+import jp.k.green.protoapp.view.fragment.ProtoSecondFragment;
 
-public class ProtoActivity extends AppCompatActivity {
+public class ProtoActivity
+        extends FragmentActivity
+        implements ProtoFirstFragment.OnFragmentInteractionListener,
+        ProtoSecondFragment.OnFragmentInteractionListener{
     private static final String TAG = "ProtoActivity";
     IProtoController mController;
 
@@ -46,15 +53,24 @@ public class ProtoActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "### onCreate ###");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proto);
 
+        ProtoFirstFragment firstFragment = ProtoFirstFragment.newInstance(null, null);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_frame, firstFragment)
+                .commit();
+
         Intent intent = new Intent(ProtoActivity.this, ProtoController.class);
         bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
