@@ -18,6 +18,7 @@ import jp.k.green.protoapp.domain.ProtoController;
 import jp.k.green.protoapp.domain.ProtoControllerData;
 import jp.k.green.protoapp.view.fragment.ProtoFirstFragment;
 import jp.k.green.protoapp.view.fragment.ProtoSecondFragment;
+import jp.k.green.protoapp.view.reactive.ScreenTransitionObservable;
 
 public class ProtoActivity
         extends FragmentActivity
@@ -25,6 +26,14 @@ public class ProtoActivity
         ProtoSecondFragment.OnFragmentInteractionListener{
     private static final String TAG = "ProtoActivity";
     IProtoController mController;
+
+    ScreenTransitionObservable mScreenTransitionObservable = new ScreenTransitionObservable();
+    ScreenTransitionObservable.OnChangeScreenListener mChangeScreenListener = new ScreenTransitionObservable.OnChangeScreenListener() {
+        @Override
+        public void onChangeScreen(int id) {
+
+        }
+    };
 
     private IProtoControllerCallback mCallback = new IProtoControllerCallback.Stub() {
 
@@ -67,6 +76,18 @@ public class ProtoActivity
         Intent intent = new Intent(ProtoActivity.this, ProtoController.class);
         bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
 
+    }
+
+    @Override
+    protected  void onResume() {
+        super.onResume();
+        mScreenTransitionObservable.register(mChangeScreenListener);
+    }
+
+    @Override
+    protected  void onPause() {
+        super.onPause();
+        mScreenTransitionObservable.unregister(mChangeScreenListener);
     }
 
     @Override

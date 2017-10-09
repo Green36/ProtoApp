@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jp.k.green.protoapp.R;
+import jp.k.green.protoapp.view.presenter.ProtoFirstPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +24,8 @@ import jp.k.green.protoapp.R;
  */
 public class ProtoFirstFragment extends Fragment {
     private static final String TAG = "ProtoFirstFragment";
-    private FragmentActivity mActivity = null;
+
+    private ProtoFirstPresenter mPresenter = null;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,26 +38,11 @@ public class ProtoFirstFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private View.OnClickListener mClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch( v.getId()){
-                case R.id.button1:
-                    Log.d(TAG, "onClickListener button1");
-                    ProtoSecondFragment secondFragment = ProtoSecondFragment.newInstance(null, null);
-                    mActivity.getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_frame, secondFragment)
-                            .commit();
-                    break;
-                case R.id.button2:
-                    Log.d(TAG, "onClickListener button2");
-                    break;
-            }
-        }
-    };
+
 
     public ProtoFirstFragment() {
         // Required empty public constructor
+        mPresenter = new ProtoFirstPresenter();
     }
 
     /**
@@ -83,7 +70,6 @@ public class ProtoFirstFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -91,14 +77,13 @@ public class ProtoFirstFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_proto_first, container, false);
-        setOnClickListner(v);
+        mPresenter.setView(v);
+        mPresenter.initialize();
+
         return v;
     }
 
-    private void setOnClickListner(View v) {
-        v.findViewById(R.id.button1).setOnClickListener(mClickListener);
-        v.findViewById(R.id.button2).setOnClickListener(mClickListener);
-    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -110,7 +95,6 @@ public class ProtoFirstFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (FragmentActivity)context;
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -123,6 +107,18 @@ public class ProtoFirstFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        mPresenter.onViewResume();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        mPresenter.onViewPause();
     }
 
     /**
