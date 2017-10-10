@@ -19,14 +19,14 @@ import jp.k.green.protoapp.domain.ProtoController;
 import jp.k.green.protoapp.domain.ProtoControllerData;
 import jp.k.green.protoapp.view.fragment.FragmentFactory;
 import jp.k.green.protoapp.view.fragment.FragmentFactory.FragmentId;
-import jp.k.green.protoapp.view.fragment.ProtoFirstFragment;
-import jp.k.green.protoapp.view.fragment.ProtoSecondFragment;
+import jp.k.green.protoapp.view.fragment.FirstFragment;
+import jp.k.green.protoapp.view.fragment.SecondFragment;
 import jp.k.green.protoapp.view.reactive.ScreenTransitionObservable;
 
 public class ProtoActivity
         extends FragmentActivity
-        implements ProtoFirstFragment.OnFragmentInteractionListener,
-        ProtoSecondFragment.OnFragmentInteractionListener{
+        implements FirstFragment.OnFragmentInteractionListener,
+        SecondFragment.OnFragmentInteractionListener{
     private static final String TAG = "ProtoActivity";
     IProtoController mController;
 
@@ -75,7 +75,7 @@ public class ProtoActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proto);
 
-        ProtoFirstFragment firstFragment = ProtoFirstFragment.newInstance(null, null);
+        FirstFragment firstFragment = FirstFragment.newInstance(null, null);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_frame, firstFragment)
                 .commit();
