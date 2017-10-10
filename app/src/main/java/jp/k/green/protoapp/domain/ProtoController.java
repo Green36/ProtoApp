@@ -33,7 +33,7 @@ public class ProtoController extends Service {
         }
 
         @Override
-        public int func1(int lhs, int rhs) throws RemoteException {
+        public int func1(int param1, int param2) throws RemoteException {
             Log.d(TAG, "func1()");
             return 0;
         }

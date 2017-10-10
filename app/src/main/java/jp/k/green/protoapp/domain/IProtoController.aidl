@@ -16,7 +16,7 @@ interface IProtoController {
      */
     oneway void unregisterCallback(IProtoControllerCallback callback);
 
-    int func1(int lhs, int rhs);
+    int func1(int param1, int param2);
 
     int func2(int param1, int param2);
 
