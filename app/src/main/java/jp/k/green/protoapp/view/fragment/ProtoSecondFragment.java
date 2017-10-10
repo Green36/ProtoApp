@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jp.k.green.protoapp.R;
+import jp.k.green.protoapp.view.presenter.FirstPresenter;
+import jp.k.green.protoapp.view.presenter.SecondPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +24,9 @@ import jp.k.green.protoapp.R;
  */
 public class ProtoSecondFragment extends Fragment {
     private static final String TAG = "ProtoSecondFragment";
+
+    private SecondPresenter mPresenter = null;
+
     private FragmentActivity mActivity = null;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,6 +59,7 @@ public class ProtoSecondFragment extends Fragment {
 
     public ProtoSecondFragment() {
         // Required empty public constructor
+        mPresenter = new SecondPresenter();
     }
 
     /**
@@ -88,14 +94,9 @@ public class ProtoSecondFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_proto_second, container, false);
-        setOnClickListner(v);
-
+        mPresenter.setView(v);
+        mPresenter.initialize();
         return v;
-    }
-
-    private void setOnClickListner(View v) {
-        v.findViewById(R.id.button3).setOnClickListener(mClickListener);
-        v.findViewById(R.id.button4).setOnClickListener(mClickListener);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

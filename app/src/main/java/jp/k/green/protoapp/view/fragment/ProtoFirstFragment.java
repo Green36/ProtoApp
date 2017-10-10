@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jp.k.green.protoapp.R;
-import jp.k.green.protoapp.view.presenter.ProtoFirstPresenter;
+import jp.k.green.protoapp.view.presenter.FirstPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +25,7 @@ import jp.k.green.protoapp.view.presenter.ProtoFirstPresenter;
 public class ProtoFirstFragment extends Fragment {
     private static final String TAG = "ProtoFirstFragment";
 
-    private ProtoFirstPresenter mPresenter = null;
+    private FirstPresenter mPresenter = null;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +42,7 @@ public class ProtoFirstFragment extends Fragment {
 
     public ProtoFirstFragment() {
         // Required empty public constructor
-        mPresenter = new ProtoFirstPresenter();
+        mPresenter = new FirstPresenter();
     }
 
     /**

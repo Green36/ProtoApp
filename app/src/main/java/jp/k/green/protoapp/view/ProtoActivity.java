@@ -6,6 +6,7 @@ import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,8 @@ import jp.k.green.protoapp.domain.IProtoController;
 import jp.k.green.protoapp.domain.IProtoControllerCallback;
 import jp.k.green.protoapp.domain.ProtoController;
 import jp.k.green.protoapp.domain.ProtoControllerData;
+import jp.k.green.protoapp.view.fragment.FragmentFactory;
+import jp.k.green.protoapp.view.fragment.FragmentFactory.FragmentId;
 import jp.k.green.protoapp.view.fragment.ProtoFirstFragment;
 import jp.k.green.protoapp.view.fragment.ProtoSecondFragment;
 import jp.k.green.protoapp.view.reactive.ScreenTransitionObservable;
@@ -27,13 +30,17 @@ public class ProtoActivity
     private static final String TAG = "ProtoActivity";
     IProtoController mController;
 
-    ScreenTransitionObservable mScreenTransitionObservable = new ScreenTransitionObservable();
-    ScreenTransitionObservable.OnChangeScreenListener mChangeScreenListener = new ScreenTransitionObservable.OnChangeScreenListener() {
-        @Override
-        public void onChangeScreen(int id) {
-
-        }
-    };
+    ScreenTransitionObservable mScreenTransitionObservable = ScreenTransitionObservable.getInstance();
+    ScreenTransitionObservable.OnChangeScreenListener mChangeScreenListener =
+            new ScreenTransitionObservable.OnChangeScreenListener() {
+                @Override
+                public void onChangeScreen(FragmentId id) {
+                    Fragment fragment = new FragmentFactory().createFragment(id);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_frame, fragment)
+                            .commit();
+                }
+            };
 
     private IProtoControllerCallback mCallback = new IProtoControllerCallback.Stub() {
 

@@ -5,10 +5,10 @@ import android.util.Log;
 import android.view.View;
 
 import jp.k.green.protoapp.R;
-import jp.k.green.protoapp.view.fragment.ProtoFirstFragment;
-import jp.k.green.protoapp.view.fragment.ProtoSecondFragment;
+import jp.k.green.protoapp.view.fragment.FragmentFactory;
+import jp.k.green.protoapp.view.reactive.ScreenTransitionObservable;
 
-public class ProtoFirstPresenter implements ProtoPresenterBase{
+public class SecondPresenter implements  ProtoPresenterBase {
     private static final String TAG = "ProtoFirstPresenter";
     private View mView;
 
@@ -16,24 +16,22 @@ public class ProtoFirstPresenter implements ProtoPresenterBase{
         @Override
         public void onClick(View v) {
             switch( v.getId()){
-                case R.id.button1:
-                    Log.d(TAG, "onClickListener button1");
-//                    ProtoSecondFragment secondFragment = ProtoSecondFragment.newInstance(null, null);
-//                    getActivity().getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.fragment_frame, secondFragment)
-//                            .commit();
+                case R.id.button3:
+                    Log.d(TAG, "onClickListener button3");
+                    ScreenTransitionObservable.getInstance().notifyChangeScreen(FragmentFactory.FragmentId.ID_FIRST);
                     break;
-                case R.id.button2:
-                    Log.d(TAG, "onClickListener button2");
+                case R.id.button4:
+                    Log.d(TAG, "onClickListener button4");
                     break;
             }
         }
     };
 
     private void setOnClickListner(View v) {
-        v.findViewById(R.id.button1).setOnClickListener(mClickListener);
-        v.findViewById(R.id.button2).setOnClickListener(mClickListener);
+        v.findViewById(R.id.button3).setOnClickListener(mClickListener);
+        v.findViewById(R.id.button4).setOnClickListener(mClickListener);
     }
+
     @Override
     public void initialize() {
 

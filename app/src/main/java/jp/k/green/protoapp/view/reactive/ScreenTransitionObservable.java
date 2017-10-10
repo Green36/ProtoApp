@@ -4,16 +4,25 @@ package jp.k.green.protoapp.view.reactive;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScreenTransitionObservable {
+import jp.k.green.protoapp.view.fragment.FragmentFactory.FragmentId;
 
+public class ScreenTransitionObservable {
+    static ScreenTransitionObservable mInstance;
     List<OnChangeScreenListener> mChangeScreenListeners;
 
-    public ScreenTransitionObservable() {
+    private ScreenTransitionObservable() {
         mChangeScreenListeners = new ArrayList<OnChangeScreenListener>();
     }
 
     public interface OnChangeScreenListener {
-        void onChangeScreen(int id);
+        void onChangeScreen(FragmentId id);
+    }
+
+    public static ScreenTransitionObservable getInstance() {
+        if( mInstance == null) {
+            mInstance = new ScreenTransitionObservable();
+        }
+        return mInstance;
     }
 
     public void register(OnChangeScreenListener observer) {
@@ -27,9 +36,9 @@ public class ScreenTransitionObservable {
         mChangeScreenListeners.remove(observer);
     }
 
-    public void notifyObservers(int fragment_id) {
+    public void notifyChangeScreen(FragmentId id) {
         for (OnChangeScreenListener changeScreenListener : mChangeScreenListeners) {
-            changeScreenListener.onChangeScreen(fragment_id);
+            changeScreenListener.onChangeScreen(id);
         }
     }
 
