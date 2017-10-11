@@ -4,7 +4,10 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -19,6 +22,8 @@ import jp.k.green.protoservice.ProtoServiceData;
 public class ProtoController extends Service {
     private static final String TAG = "ProtoController";
     IProtoService mService;
+
+    private MessageHandler mHandler;
 
     private IProtoController.Stub mStub = new IProtoController.Stub() {
 
@@ -35,18 +40,30 @@ public class ProtoController extends Service {
         @Override
         public int func1(int param1, int param2) throws RemoteException {
             Log.d(TAG, "func1()");
+            ControllerMessage data = new ControllerMessage();
+            data.setObject(null);
+            Message msg = mHandler.obtainMessage(ControllerMessage.MSG_VIEW_FUNC1, data);
+            mHandler.sendMessage(msg);
             return 0;
         }
 
         @Override
         public int func2(int param1, int param2) throws RemoteException {
             Log.d(TAG, "func2()");
+            ControllerMessage data = new ControllerMessage();
+            data.setObject(null);
+            Message msg = mHandler.obtainMessage(ControllerMessage.MSG_VIEW_FUNC2, data);
+            mHandler.sendMessage(msg);
             return 0;
         }
 
         @Override
         public int func3() throws RemoteException {
             Log.d(TAG, "func3()");
+            ControllerMessage data = new ControllerMessage();
+            data.setObject(null);
+            Message msg = mHandler.obtainMessage(ControllerMessage.MSG_VIEW_FUNC3, data);
+            mHandler.sendMessage(msg);
             return 0;
         }
     };
@@ -63,23 +80,29 @@ public class ProtoController extends Service {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             Log.d(TAG, "### onServiceDisconnected() ###");
-            mService = null;
+            mHandler.setProtoService(null);
         }
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "### onServiceConnected() ###");
-            mService = IProtoService.Stub.asInterface(service);
+            IProtoService protoService = IProtoService.Stub.asInterface(service);
             try {
-                mService.registerCallback(mCallback);
+                protoService.registerCallback(mCallback);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
+            mHandler.setProtoService(protoService);
         }
     };
 
     public ProtoController() {
         Log.d(TAG, "### Constructor ###");
+
+        HandlerThread thread = new HandlerThread("IntentService[" + TAG + "]");
+        thread.start();
+
+        mHandler = new MessageHandler(thread.getLooper());
     }
 
     @Override
@@ -87,12 +110,14 @@ public class ProtoController extends Service {
         Log.d(TAG, "### onBind() ###");
         return mStub;
     }
+
     @Override
     public boolean onUnbind(Intent intent) {
         boolean result = super.onUnbind(intent);
         Log.d(TAG, "### onUnbind() :" + result + " ###");
         return result;
     }
+
     @Override
     public void onCreate() {
         Log.d(TAG, "### onCreate() ###");

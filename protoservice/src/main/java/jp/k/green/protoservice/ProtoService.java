@@ -13,26 +13,31 @@ public class ProtoService extends Service {
 
         @Override
         public void registerCallback(IProtoServiceCallback callback) throws RemoteException {
+            Log.d(TAG, "registerCallback()");
 
         }
 
         @Override
         public void unregisterCallback(IProtoServiceCallback callback) throws RemoteException {
+            Log.d(TAG, "unregisterCallback()");
 
         }
 
         @Override
-        public int func1(int lhs, int rhs) throws RemoteException {
+        public int func1(int param1, int param2) throws RemoteException {
+            Log.d(TAG, "func2( " + String.valueOf(param1) + ", " + String.valueOf(param2) + ")");
             return 0;
         }
 
         @Override
         public int func2(int param1, int param2) throws RemoteException {
+            Log.d(TAG, "func2( " + String.valueOf(param1) + ", " + String.valueOf(param2) + ")");
             return 0;
         }
 
         @Override
         public int func3() throws RemoteException {
+            Log.d(TAG, "func3()");
             return 0;
         }
     };
