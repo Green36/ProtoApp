@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 
 import jp.k.green.protoapp.R;
+import jp.k.green.protoapp.view.adapter.ControllerAdapter;
 import jp.k.green.protoapp.view.fragment.FragmentFactory;
 import jp.k.green.protoapp.view.reactive.ScreenTransitionObservable;
 
@@ -22,6 +23,7 @@ public class SecondPresenter implements  ProtoPresenterBase {
                     break;
                 case R.id.button4:
                     Log.d(TAG, "onClickListener button4");
+                    ControllerAdapter.getInstance().func2(3,4);
                     break;
             }
         }

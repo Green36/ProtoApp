@@ -17,6 +17,7 @@ import jp.k.green.protoapp.domain.IProtoController;
 import jp.k.green.protoapp.domain.IProtoControllerCallback;
 import jp.k.green.protoapp.domain.ProtoController;
 import jp.k.green.protoapp.domain.ProtoControllerData;
+import jp.k.green.protoapp.view.adapter.ControllerAdapter;
 import jp.k.green.protoapp.view.fragment.FragmentFactory;
 import jp.k.green.protoapp.view.fragment.FragmentFactory.FragmentId;
 import jp.k.green.protoapp.view.fragment.FirstFragment;
@@ -61,6 +62,7 @@ public class ProtoActivity
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "### onServiceConnected ###");
             mController = IProtoController.Stub.asInterface(service);
+            ControllerAdapter.getInstance().SetController(mController);
             try {
                 mController.registerCallback(mCallback);
             } catch (RemoteException e) {

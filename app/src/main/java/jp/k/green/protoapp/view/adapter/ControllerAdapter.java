@@ -2,23 +2,25 @@ package jp.k.green.protoapp.view.adapter;
 
 
 import android.os.RemoteException;
+import android.util.Log;
 
 import jp.k.green.protoapp.domain.IProtoController;
 
 public class ControllerAdapter {
-    private ControllerAdapter mInstance;
+    private static final String TAG = "ControllerAdapter";
+    private static ControllerAdapter mInstance;
     private IProtoController mController;
 
     private ControllerAdapter() {
 
     }
 
-    public ControllerAdapter getInstance(IProtoController ctrl){
+    public void SetController(IProtoController ctrl){
+        Log.d(TAG, "mController set.");
         mController = ctrl;
-        return getInstance();
     }
 
-    public ControllerAdapter getInstance(){
+    public static ControllerAdapter getInstance(){
         if( mInstance == null){
             mInstance = new ControllerAdapter();
         }
@@ -26,6 +28,7 @@ public class ControllerAdapter {
     }
 
     public void func1(int param1, int param2) {
+        Log.d(TAG, "func1(" + String.valueOf(param1) + ", " + String.valueOf(param2) + " )");
         try {
             mController.func1(param1, param2);
         } catch (RemoteException e) {
@@ -34,6 +37,7 @@ public class ControllerAdapter {
     }
 
     public void func2(int param1, int param2) {
+        Log.d(TAG, "func2(" + String.valueOf(param1) + ", " + String.valueOf(param2) + " )");
         try {
             mController.func2(param1, param2);
         } catch (RemoteException e) {
@@ -42,6 +46,7 @@ public class ControllerAdapter {
     }
 
     public void func3() {
+        Log.d(TAG, "func3()");
         try {
             mController.func3();
         } catch (RemoteException e) {
