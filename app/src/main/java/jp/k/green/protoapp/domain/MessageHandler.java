@@ -48,6 +48,8 @@ public class MessageHandler extends Handler {
                 }
                 break;
             case ControllerMessage.MSG_SERVICE_FUNC1:
+                // TODO
+
                 break;
             case ControllerMessage.MSG_SERVICE_FUNC2:
                 break;

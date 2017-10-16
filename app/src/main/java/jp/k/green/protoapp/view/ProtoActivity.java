@@ -53,7 +53,8 @@ public class ProtoActivity
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "### onServiceConnected ###");
-            mController = ((ProtoController.ProtoControllerBinder)service).getService();
+            ProtoController.ProtoControllerBinder binder = (ProtoController.ProtoControllerBinder) service;
+            mController = binder.getService();
             ControllerAdapter.getInstance(mController);
         }
     };
@@ -68,8 +69,8 @@ public class ProtoActivity
     }
 
     public void bindProtoController() {
-        Intent intent = new Intent(ProtoController.class.getName());
-        intent.setPackage("ip.k.green.protoapp");
+        Intent intent = new Intent(ProtoActivity.this, ProtoController.class);
+        intent.setPackage("jp.k.green.protoapp.domain");
         bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
     }
 

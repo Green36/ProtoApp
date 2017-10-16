@@ -21,10 +21,9 @@
         <service
             android:name=".domain.ProtoController"
             android:enabled="true"
-            android:exported="true"
-            android:process=":controller">
+            android:exported="true">
             <intent-filter>
-                <action android:name=".domain.IProtoController" />
+                <action android:name=".domain.ProtoController" />
             </intent-filter>
         </service>
 

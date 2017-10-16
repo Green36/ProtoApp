@@ -29,6 +29,7 @@ public class ProtoController extends Service {
 
         @Override
         public int onReceiveControllerData(ProtoServiceData data) throws RemoteException {
+            sendMessage(ControllerMessage.MSG_SERVICE_FUNC1, new ControllerMessage());
             return 0;
         }
     };
@@ -60,9 +61,9 @@ public class ProtoController extends Service {
             return ProtoController.this;
         }
     }
+
     //Binderの生成
     private final IBinder mBinder = new ProtoControllerBinder();
-
 
     public ProtoController() {
         Log.d(TAG, "### Constructor ###");
