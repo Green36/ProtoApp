@@ -5,12 +5,15 @@ import android.util.Log;
 import android.view.View;
 
 import jp.k.green.protoapp.R;
+import jp.k.green.protoapp.view.adapter.ControllerAdapter;
 import jp.k.green.protoapp.view.fragment.FragmentFactory;
 import jp.k.green.protoapp.view.reactive.ScreenTransitionObservable;
+import jp.k.green.protoservice.ProtoServiceData;
 
 public class SecondPresenter implements  ProtoPresenterBase {
     private static final String TAG = "ProtoFirstPresenter";
     private View mView;
+    private ControllerAdapter mController = ControllerAdapter.getInstance();
 
     private View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
@@ -22,6 +25,8 @@ public class SecondPresenter implements  ProtoPresenterBase {
                     break;
                 case R.id.button4:
                     Log.d(TAG, "onClickListener button4");
+                    mController.reqFunc2(3, 4);
+
                     break;
             }
         }
@@ -55,4 +60,5 @@ public class SecondPresenter implements  ProtoPresenterBase {
         mView = view;
         setOnClickListner(mView);
     }
+
 }

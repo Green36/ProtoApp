@@ -16,6 +16,7 @@ import android.util.Log;
 import jp.k.green.protoapp.R;
 import jp.k.green.protoapp.domain.ProtoController;
 import jp.k.green.protoapp.domain.ProtoControllerData;
+import jp.k.green.protoapp.view.adapter.ControllerAdapter;
 import jp.k.green.protoapp.view.fragment.FragmentFactory;
 import jp.k.green.protoapp.view.fragment.FragmentFactory.FragmentId;
 import jp.k.green.protoapp.view.fragment.FirstFragment;
@@ -53,6 +54,7 @@ public class ProtoActivity
         public void onServiceConnected(ComponentName name, IBinder service) {
             Log.d(TAG, "### onServiceConnected ###");
             mController = ((ProtoController.ProtoControllerBinder)service).getService();
+            ControllerAdapter.getInstance(mController);
         }
     };
 
@@ -61,11 +63,6 @@ public class ProtoActivity
         Log.d(TAG, "### onCreate ###");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proto);
-
-        FirstFragment firstFragment = FirstFragment.newInstance(null, null);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_frame, firstFragment)
-                .commit();
 
         bindProtoController();
     }
@@ -79,6 +76,11 @@ public class ProtoActivity
     @Override
     protected  void onResume() {
         super.onResume();
+        FirstFragment firstFragment = FirstFragment.newInstance(null, null);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_frame, firstFragment)
+                .commit();
+
         mScreenTransitionObservable.register(mChangeScreenListener);
     }
 

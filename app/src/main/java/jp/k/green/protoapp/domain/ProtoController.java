@@ -98,5 +98,10 @@ public class ProtoController extends Service {
         Log.d(TAG, "### onDestroy ###");
     }
 
+    public void sendMessage(int id, ControllerMessage data){
+        Message msg = mHandler.obtainMessage(id, data);
+        mHandler.sendMessage(msg);
+    }
+
 
 }

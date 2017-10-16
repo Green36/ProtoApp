@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jp.k.green.protoapp.R;
+import jp.k.green.protoapp.view.adapter.ControllerAdapter;
 import jp.k.green.protoapp.view.presenter.FirstPresenter;
 
 /**
@@ -37,7 +38,6 @@ public class FirstFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-
 
 
     public FirstFragment() {
