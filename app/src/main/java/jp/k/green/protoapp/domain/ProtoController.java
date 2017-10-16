@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -11,8 +12,6 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 
-import jp.k.green.protoapp.domain.IProtoController;
-import jp.k.green.protoapp.domain.IProtoControllerCallback;
 import jp.k.green.protoservice.IProtoService;
 import jp.k.green.protoservice.IProtoServiceCallback;
 import jp.k.green.protoservice.ProtoService;
@@ -25,48 +24,6 @@ public class ProtoController extends Service {
 
     private MessageHandler mHandler;
 
-    private IProtoController.Stub mStub = new IProtoController.Stub() {
-
-        @Override
-        public void registerCallback(IProtoControllerCallback callback) throws RemoteException {
-            Log.d(TAG, "registerCallback()");
-        }
-
-        @Override
-        public void unregisterCallback(IProtoControllerCallback callback) throws RemoteException {
-            Log.d(TAG, "unregisterCallback()");
-        }
-
-        @Override
-        public int func1(int param1, int param2) throws RemoteException {
-            Log.d(TAG, "func1()");
-            ControllerMessage data = new ControllerMessage();
-            data.setObject(null);
-            Message msg = mHandler.obtainMessage(ControllerMessage.MSG_VIEW_FUNC1, data);
-            mHandler.sendMessage(msg);
-            return 0;
-        }
-
-        @Override
-        public int func2(int param1, int param2) throws RemoteException {
-            Log.d(TAG, "func2()");
-            ControllerMessage data = new ControllerMessage();
-            data.setObject(null);
-            Message msg = mHandler.obtainMessage(ControllerMessage.MSG_VIEW_FUNC2, data);
-            mHandler.sendMessage(msg);
-            return 0;
-        }
-
-        @Override
-        public int func3() throws RemoteException {
-            Log.d(TAG, "func3()");
-            ControllerMessage data = new ControllerMessage();
-            data.setObject(null);
-            Message msg = mHandler.obtainMessage(ControllerMessage.MSG_VIEW_FUNC3, data);
-            mHandler.sendMessage(msg);
-            return 0;
-        }
-    };
 
     private IProtoServiceCallback mCallback = new IProtoServiceCallback.Stub() {
 
@@ -96,6 +53,17 @@ public class ProtoController extends Service {
         }
     };
 
+    public class ProtoControllerBinder extends Binder {
+        //サービスの取得
+        public ProtoController getService() {
+            Log.d(TAG, "getService()");
+            return ProtoController.this;
+        }
+    }
+    //Binderの生成
+    private final IBinder mBinder = new ProtoControllerBinder();
+
+
     public ProtoController() {
         Log.d(TAG, "### Constructor ###");
 
@@ -108,7 +76,7 @@ public class ProtoController extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "### onBind() ###");
-        return mStub;
+        return mBinder;
     }
 
     @Override
