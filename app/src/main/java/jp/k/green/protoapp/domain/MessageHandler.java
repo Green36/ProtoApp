@@ -36,6 +36,7 @@ public class MessageHandler extends Handler {
             case ControllerMessage.MSG_VIEW_FUNC2:
                 try {
                     mService.func2(1,2);
+                    Log.d(TAG, "#########" + new JniWrapper().getStr());
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
