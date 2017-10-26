@@ -106,6 +106,18 @@ public class SecondFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        mPresenter.onViewResume();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        mPresenter.onViewPause();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

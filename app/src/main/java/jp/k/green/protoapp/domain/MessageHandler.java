@@ -7,6 +7,7 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 
+import jp.k.green.protoapp.view.adapter.ControllerAdapter;
 import jp.k.green.protoservice.IProtoService;
 
 public class MessageHandler extends Handler {
@@ -49,12 +50,16 @@ public class MessageHandler extends Handler {
                 }
                 break;
             case ControllerMessage.MSG_SERVICE_FUNC1:
-                // TODO
-
+                Log.d(TAG, "onNoticeFunc1");
+                ControllerAdapter.getInstance().onNoticeFunc1();
                 break;
             case ControllerMessage.MSG_SERVICE_FUNC2:
+                Log.d(TAG, "onNoticeFunc2");
+                ControllerAdapter.getInstance().onNoticeFunc2();
                 break;
             case ControllerMessage.MSG_SERVICE_FUNC3:
+                Log.d(TAG, "onNoticeFunc3");
+                ControllerAdapter.getInstance().onNoticeFunc3();
                 break;
         }
     }
